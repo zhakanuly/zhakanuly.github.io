@@ -1,2 +1,1 @@
-# zhakanuly.github.io
-uber
+# zhakanuly.github.i
