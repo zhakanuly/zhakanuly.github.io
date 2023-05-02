@@ -1,1 +1,0 @@
-# zhakanuly.github.i
