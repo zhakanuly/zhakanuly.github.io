@@ -1,2 +1,0 @@
-# zhakanuly.github.io
-uber
