@@ -35,7 +35,7 @@ function calcExpenses() {
     const all = document.querySelectorAll(".exp_list_elements");
 
     all.forEach((x) => {
-        console.log(x);
+        // console.log(x);
         const price = x.querySelector(".exp_list_price");
         total += Number(price.innerHTML);
     });
@@ -47,6 +47,9 @@ function calcBalance() {
     balanceView.innerHTML = budgetView.innerHTML - expensesView.innerHTML;
 };
 
+var changElement;
+var oldPrice1;
+var difference1;
 function expBtnRegim1() {
     if(flag == false) {
         const title = expensesNameInput.value;
@@ -76,12 +79,15 @@ function expBtnRegim1() {
 
         const expChangeBtn = document.createElement("button");
         expChangeBtn.innerHTML = "Өзгерту";
-        expChangeBtn.setAttribute("class", "exp_change_btn")
+        expChangeBtn.setAttribute("class", "exp_change_btn");
         expChangeBtn.addEventListener("click", (e) => {
-            const aaa = e.target.parentElement;
-            console.log(aaa);
-            expensesNameInput.value = expListTitle.innerHTML;
-            expensesPriceInput.value = expListPrice.innerHTML;
+            var aaa = e.target.parentElement;
+            changElement = aaa
+            expensesNameInput.value = aaa.querySelector('.exp_list_title').innerHTML;
+            expensesPriceInput.value = aaa.querySelector('.exp_list_price').innerHTML;
+            var oldPrice = aaa.querySelector('.exp_list_price').innerHTML;
+            oldPrice1 = oldPrice;
+            console.log("ескі значение " + oldPrice1);
             flag = true;
         });
 
@@ -100,6 +106,33 @@ function expBtnRegim1() {
         calcExpenses();
         calcBalance();
     } else {
+        changElement.children[0].innerHTML = expensesNameInput.value;
+        changElement.children[1].innerHTML = expensesPriceInput.value;
+        expensesNameInput.value = " ";
+        expensesPriceInput.value = " ";
+        let newPrice = changElement.children[1].innerHTML;
+        console.log("Жаңа значение " + newPrice);
+        var difference = newPrice - oldPrice1;
+        difference1 = difference;
+        console.log("Разница " + difference1);
+        oldOrNew();
+        changeBalance();
         flag = false;
     }
 };
+
+function oldOrNew() {
+    if(difference1 > 0) {
+        expensesView.innerHTML = Number(expensesView.innerHTML) + difference1;
+    } else {
+        expensesView.innerHTML = Number(expensesView.innerHTML) + difference1;
+    }
+};
+
+function changeBalance() {
+    if(difference1 > 0) {
+        balanceView.innerHTML = Number(balanceView.innerHTML) - difference1;
+    } else {
+        balanceView.innerHTML = Number(balanceView.innerHTML) - difference1;
+    }
+}
